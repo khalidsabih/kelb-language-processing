@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use the KLP code or pilot methodology, please cite this repository."
+title: "KLP — Kelb Language Processing"
+type: software
+authors:
+  - family-names: "Sabih"
+    given-names: "Khalid"
+repository-code: "https://github.com/khalidsabih/kelb-language-processing"
+license: MIT
+version: 0.1.0
+date-released: 2026-11-09
+abstract: "Exploratory computational framework for testing whether one dog's recent behavior adds predictive information about another dog's near-future response while separating predictive association from causal and communicative claims."
