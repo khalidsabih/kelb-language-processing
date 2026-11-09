@@ -1,5 +1,7 @@
 # Pilot experiments: pose vs motion-only tracks (2026-10-30)
 
+> **HISTORICAL ANALYSIS — NOT THE CANONICAL KLP v0 RESULT.** This run predates the corrected distance target, camera stabilization, close/continuous interaction filtering, and final sender-null controls. Its small positive-looking linear sender increment (+0.008 R²) was not retained: on the same earlier windows the shuffled-sender null was similarly positive, and the corrected clean analysis found no broad sender advantage. See [README.md](README.md) and [pilot_experiments_2026-10-30_cycle2.md](pilot_experiments_2026-10-30_cycle2.md).
+
 Question: does sender-dog information improve prediction of the receiver dog's next 1 s beyond the receiver's own history?
 
 ## Setup
