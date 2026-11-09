@@ -1,6 +1,10 @@
 # KLP v0 — Kelb Language Processing
 
+[![tests](https://github.com/khalidsabih/kelb-language-processing/actions/workflows/tests.yml/badge.svg)](https://github.com/khalidsabih/kelb-language-processing/actions/workflows/tests.yml)
+
 > Experimental research code for testing whether a sender dog's recent behavior improves prediction of a receiver dog's near-future behavior.
+
+**Naming note:** KLP is an NLP-inspired research framing, not a claim that dogs possess human-like language or that this system translates dog signals.
 
 **Research status:** exploratory pilot. Current results do **not** establish causation, communication, semantic meaning, or intention.
 
@@ -77,7 +81,7 @@ Pawgaze and K9-Bench contain only YouTube IDs and multiple-choice questions, wit
        --metadata data/external/video_metadata.csv --min-duration 120   # writes candidate_videos_long.csv
    ```
    `scripts/pilot/search_videos.py --out data/external/search_candidates.csv --exclude <known lists>` finds more videos by YouTube search instead, using metadata only. It keeps results that are long enough, not Shorts, and whose titles mention dogs and don't suggest compilations, music or talks. Raw results are saved next to `--out`, and `--from-raw` re-filters them without searching again. Titles are a weak filter, so check the footage before tracking: `scripts/pilot/screen_videos.py --candidates <csv> --out data/external/screen/screen.csv` downloads each video at low resolution, counts dogs with YOLO on 20 frames spread through it, writes the share of frames with two or more dogs, and deletes the video. It can be resumed.
-2. **Extract tracks (outside this repo).** For each video, run dog detection, tracking and pose estimation and write one row per dog per frame:
+2. **Extract tracks from locally acquired footage.** For each video, run dog detection, tracking and pose estimation and write one row per dog per frame:
 
    | column | required | meaning |
    |---|---|---|
@@ -117,12 +121,12 @@ Every ordered pair of dogs in a shot yields windows at each anchor time (window 
 
 `scripts/run_lag_and_events.py --tracks <files...>` adds two analyses on the same filtered pipeline: a response-lag sweep (the receiver's target window starts `lags_s` after the sender's past window ends), and sender move onsets (a still sender starting to move, defined under `events` in the config). For onsets, a receiver-only baseline cross-fitted by channel is compared between onset windows and control times of the same pairs, with a 95% interval from resampling channels; onsets where the receiver started at the same time are excluded.
 
-`scripts/run_communication_events.py --tracks <files...>` (cycle 5) detects six kinds of sender event per ordered pair (`klp.data.events`):
+`scripts/run_communication_events.py --tracks <files...>` (cycle 5) detects six kinds of sender behavioral event per ordered pair (`klp.data.events`):
 - move onset and stop;
 - approach and withdraw (sender velocity toward or away from the receiver);
 - turn toward and turn away (pose body heading only).
 
-Each event kind is a change in one sender signal between the 0.5 s before and the 0.3 s after. For each kind and response lag (`communication_events` in the config):
+Each event kind is a change in one sender behavioral measurement between the 0.5 s before and the 0.3 s after. For each kind and response lag (`communication_events` in the config):
 - The receiver's change after each event is compared with its 5 nearest control moments in the same video. Controls are moments similar in the receiver's speed, orientation, distance change and pair distance, at least 3 s from any event of that kind in the pair (`klp.experiments.events`).
 - Events where the receiver had the same kind of event just before are dropped, since a shared change points to a shared cause.
 - p-values come from rerunning the same matching at random control moments of the same pairs (placebos), Holm-adjusted across all kinds, lags and targets.
@@ -138,9 +142,18 @@ Follow-ups:
 Requires Python >= 3.10.
 
 ```bash
-python3.13 -m pip install -e .
-python3.13 -m pytest
+# Core analyses and tests
+python -m pip install -e ".[dev]"
+python -m pytest
+
+# Optional extraction stacks
+python -m pip install -e ".[vision]"
+python -m pip install -e ".[audio]"
+# or install both
+python -m pip install -e ".[pilot]"
 ```
+
+The core package intentionally does not require PyTorch, Transformers, Ultralytics, or OpenCV. Install only the optional stack needed for the extraction stage you are running.
 
 There is no bundled dataset. The tests use a hand-written two-dog track file (`tests/fixtures/tracks_two_dogs.csv`) and small test-only toy tracks; they check the code, not any scientific result.
 
