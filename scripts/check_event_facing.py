@@ -1,10 +1,10 @@
-"""Do receivers respond more to sender events they can see? (cycle-5 follow-up)
+"""Do receiver responses depend on body orientation toward the sender? (cycle-5 follow-up)
 
     python3.13 scripts/check_event_facing.py <tracks_stabilized files...> [--config configs/v0.yaml]
 
-A response to a sender's signal should be stronger when the receiver faces the sender
-at the event than when it faces away; a stimulus that reaches both dogs (a person, a
-noise) predicts no such difference. For the 8 event responses that passed Holm
+Under a simple visual-signal account, receiver responses should be stronger when the
+receiver's pose body axis is oriented toward the sender than when it is oriented away;
+a shared outside cue (a person, a noise) predicts no such difference. For the 8 event responses that passed Holm
 correction (cells below), each event's matched-control difference is split by the
 receiver's facing at the event frame: cosine between its pose body heading and the
 direction to the sender (> 0.5 = sender within 60° of straight ahead; < 0 = sender
