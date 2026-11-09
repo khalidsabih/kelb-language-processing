@@ -1,10 +1,12 @@
 # KLP project summary (2026-10-30)
 
+> **HISTORICAL PROJECT SNAPSHOT.** For the canonical public KLP v0 conclusions, see [README.md](README.md).
+
 **Question:** does sender-dog information improve prediction of a receiver dog's future behavior beyond the receiver's own history?
 
 **Answer so far:** no measurable sender effect in the regression over all windows. Specific sender events (cycle 5) do show receiver responses, but only in an exploratory analysis that needs confirmation. Both results rest on little data: the regression keeps only 32 videos, 8 channels and about 2,300 windows after filtering, and each event cell has 14–75 events. The data, not the method, is the bottleneck.
 
-## 1. Analysis code (`src/klp`, 38 tests passing)
+## 1. Analysis code (`src/klp`, covered by the repository test suite)
 
 - Per-frame dog tracks become sender→receiver windows: 1 s of history, then the receiver's change in distance, orientation and speed.
 - Windows never cross camera cuts or tracking gaps; distances are in body sizes; splits keep each YouTube channel on one side.

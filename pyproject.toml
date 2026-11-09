@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "klp"
 version = "0.1.0"
-description = "KLP (Kelb Language Processing): receiver-grounded canine communication research scaffold"
+description = "KLP (Kelb Language Processing): receiver-grounded canine behavior research scaffold"
 requires-python = ">=3.10"
 dependencies = [
   "numpy>=1.24",
@@ -16,8 +16,33 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Track-extraction pilot (scripts/pilot/); installs PyTorch.
-pilot = ["ultralytics>=8.3", "yt-dlp", "lap"]
+dev = [
+  "pytest>=8.0",
+]
+vision = [
+  "ultralytics>=8.3",
+  "opencv-python>=4.8",
+  "yt-dlp",
+  "lap",
+]
+audio = [
+  "torch>=2.0",
+  "transformers>=4.40",
+  "av>=12",
+]
+pilot = [
+  "ultralytics>=8.3",
+  "opencv-python>=4.8",
+  "yt-dlp",
+  "lap",
+  "torch>=2.0",
+  "transformers>=4.40",
+  "av>=12",
+]
+
+[project.urls]
+Repository = "https://github.com/khalidsabih/kelb-language-processing"
+Results = "https://github.com/khalidsabih/kelb-language-processing/tree/main/results"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

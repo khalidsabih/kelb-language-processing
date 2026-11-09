@@ -1,0 +1,76 @@
+study: KLP v0 pilot
+status: exploratory
+canonical_results: results/README.md
+config: configs/v0.yaml
+seed: 42
+
+interpretation_boundary:
+  establishes_causation: false
+  establishes_communication: false
+  establishes_semantic_meaning: false
+  establishes_intention: false
+  establishes_dog_language_or_translation: false
+
+data:
+  videos_processed: 59
+  broad_prediction:
+    windows: 2322
+    videos: 32
+    channels: 8
+    held_out_channel_splits: 10
+  event_analysis:
+    videos_with_detected_events: 51
+    detected_events: 1180
+    event_kinds: 6
+    tests: 54
+    holm_surviving: 8
+  audio:
+    windows: 32875
+    dog_vocal_gt_0_5_fraction: 0.005
+
+broad_prediction:
+  linear_ridge:
+    baseline_r2_mean: 0.0516
+    baseline_r2_std: 0.0333
+    sender_plus_baseline_r2_mean: 0.0438
+    sender_plus_baseline_r2_std: 0.0340
+    sender_increment_r2_mean: -0.0078
+    sender_increment_r2_std: 0.0072
+    shuffle_null_increment_r2_mean: 0.0022
+    p_vs_shuffle: 1.0
+  lag_sweep:
+    lags_s: [0.0, 0.5, 1.0, 2.0, 3.0]
+    sender_increment_r2: [-0.0078, -0.0095, -0.0096, -0.0109, -0.0334]
+    p_vs_shuffle: [1.0, 1.0, 1.0, 1.0, 1.0]
+
+event_analysis:
+  interpretation: exploratory_association
+  holm_surviving_cells:
+    - {lag_s: 0.0, event: move_onset, target: delta_distance, estimate: -0.074, d: -0.36, events: 75, channels: 9, holm_p: 0.027}
+    - {lag_s: 0.0, event: stop, target: delta_velocity, estimate: -0.139, d: -0.70, events: 60, channels: 8, holm_p: 0.027}
+    - {lag_s: 1.0, event: turn_to, target: delta_distance, estimate: 0.065, d: 0.47, events: 44, channels: 8, holm_p: 0.047}
+    - {lag_s: 1.0, event: approach, target: delta_velocity, estimate: -0.117, d: -0.59, events: 23, channels: 7, holm_p: 0.027}
+    - {lag_s: 1.0, event: withdraw, target: delta_velocity, estimate: 0.088, d: 0.43, events: 25, channels: 5, holm_p: 0.027}
+    - {lag_s: 2.0, event: approach, target: delta_distance, estimate: -0.167, d: -1.16, events: 14, channels: 4, holm_p: 0.027}
+    - {lag_s: 2.0, event: withdraw, target: delta_distance, estimate: -0.211, d: -1.38, events: 20, channels: 5, holm_p: 0.027}
+    - {lag_s: 2.0, event: turn_to, target: delta_velocity, estimate: 0.105, d: 0.51, events: 32, channels: 7, holm_p: 0.027}
+
+facing_follow_up:
+  facing_mean_z: 0.70
+  not_facing_mean_z: 0.69
+  difference: 0.005
+  p: 0.56
+  sender_behind_mean_z: 0.73
+  sender_behind_difference: -0.03
+  sender_behind_p: 0.61
+  power_note: detects_only_large_differences_approximately_0.8_to_0.9_sd
+
+event_regression:
+  clean_increment_r2_mean: -0.011
+  clean_increment_r2_std: 0.007
+  clean_shuffle_null: -0.010
+  clean_p: 0.71
+
+audio:
+  sender_specific_experiment_run: false
+  conclusion: source_attribution_insufficient

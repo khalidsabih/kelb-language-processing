@@ -1,4 +1,4 @@
-"""Cycle 5: receiver responses after candidate sender communication events.
+"""Cycle 5: receiver responses after candidate sender behavioral events.
 
     python3.13 scripts/run_communication_events.py --tracks <tracks files...> [--config configs/v0.yaml]
 
