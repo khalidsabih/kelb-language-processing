@@ -1,17 +1,51 @@
 # KLP v0 — Kelb Language Processing
 
-KLP v0 is a minimal, runnable research scaffold for the first KLP question:
+> Experimental research code for testing whether a sender dog's recent behavior improves prediction of a receiver dog's near-future behavior.
 
-> Does information from a sender dog improve prediction of a receiver dog's future behavior beyond the receiver's own recent behavior?
+**Research status:** exploratory pilot. Current results do **not** establish causation, communication, semantic meaning, or intention.
 
-The core comparison is:
+<p align="center">
+  <img src="docs/methodology.svg" alt="KLP methodology pipeline" width="100%">
+</p>
 
-- Baseline: `(B_past, dyadic state, context) -> B_future`
-- Sender+baseline model: `(A_past, B_past, dyadic state, context) -> B_future`
+## Core question
 
-Dyadic state (e.g. pair distance) and scene context (e.g. visibility) are not sender signals, so they sit in the baseline; the sender increment measures only audio, pose, motion and orientation of the sender.
+KLP tests whether information from Dog A adds predictive value beyond Dog B's own recent behavior.
 
-The first target is deliberately low-level and non-anthropomorphic: future change in receiver distance, orientation, and velocity.
+- **Receiver baseline:** `(B_past, dyadic state, context) -> B_future`
+- **Sender + receiver:** `(A_past, B_past, dyadic state, context) -> B_future`
+- **Sender increment:** `Delta_sender = performance(A + B) - performance(B)`
+
+The prediction targets are deliberately low-level and non-anthropomorphic: future change in the receiver's **distance, orientation, and velocity**.
+
+Dyadic state (for example pair distance) and scene context (for example visibility) remain in the baseline. The sender increment measures only information supplied by Dog A's sender features.
+
+### Current modality note
+
+Video provides dog-specific tracks and pose/motion measurements. Audio is also extracted, but the current web-video pilot usually has a **shared microphone**, so a vocalization cannot always be reliably attributed to Dog A or Dog B. Scene-level audio is therefore treated as attribution-limited rather than as a trusted sender-specific signal.
+
+## Current pilot status
+
+| Question | Current status |
+|---|---|
+| Does Dog A improve broad prediction of Dog B? | **No reliable sender advantage in the current clean pilot** |
+| Are some sender events followed by structured receiver changes? | **Yes, exploratory event-specific associations** |
+| Does this establish Dog A caused Dog B's response? | **No** |
+| Does this establish communication or meaning? | **No** |
+| Main bottleneck | **Better controlled, source-attributable multimodal data** |
+
+The repository keeps negative and exploratory results visible because the aim is to test the hypothesis, not to force a positive interpretation.
+
+## Repository map
+
+| Path | Purpose |
+|---|---|
+| `src/klp/` | core data, feature, model, experiment, and evaluation code |
+| `scripts/` | pilot extraction and experiment entry points |
+| `configs/v0.yaml` | reproducible pilot configuration |
+| `results/` | pilot reports, null tests, audio analysis, and event analyses |
+| `tests/` | unit tests and toy fixtures |
+| `docs/` | methodology figure and documentation assets |
 
 ## Included in v0
 
