@@ -4,6 +4,8 @@
 
 **Research status:** exploratory pilot. Current results do **not** establish causation, communication, semantic meaning, or intention.
 
+**Quick links:** [Methodology](#core-question) · [Pilot results](results/) · [Configuration](configs/v0.yaml) · [Source code](src/klp/) · [Tests](tests/)
+
 <p align="center">
   <img src="docs/methodology.svg" alt="KLP methodology pipeline" width="100%">
 </p>
@@ -160,10 +162,10 @@ Cite both in any publication:
   note          = {NeurIPS 2026}
 }
 
-@inproceedings{pawgaze2025,
+@inproceedings{attarde2025pawgaze,
   title     = {Pawgaze: A Benchmark for Fine-Grained Multimodal Analysis of Canine Behavior},
-  author    = {TODO: add authors from the NeurIPS 2025 proceedings},
-  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  author    = {Attarde, Khush and Bhutani, Divye},
+  booktitle = {NeurIPS 2025 Workshop on AI for Non-Human Animal Communication},
   year      = {2025},
   url       = {https://neurips.cc/virtual/2025/131537}
 }
