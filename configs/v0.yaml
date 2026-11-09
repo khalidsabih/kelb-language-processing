@@ -1,0 +1,54 @@
+seed: 42
+# Windowing of per-frame tracks, in seconds.
+past_s: 1.0
+future_s: 1.0
+stride_s: 0.5
+# Keep only pairs tracked together without a gap for at least min_run_s seconds and at most
+# max_pair_distance apart (body sizes) at the anchor time; null disables a filter.
+min_run_s: 5.0
+max_pair_distance: 3.0
+# Random subset of windows kept per video, so long or many-dog videos cannot dominate (null = no cap).
+max_windows_per_video: 200
+# A sender modality is used only if its features exist in at least this fraction of windows.
+min_modality_coverage: 0.5
+# "channel": hold out whole channels (videos sharing channel_id), since one channel often films the same dogs;
+# "video": hold out whole videos, keeping fragmented tracks of one recording together;
+# "component": hold out connected groups of dogs (no rows dropped);
+# "dog": hold out individual dogs (drops rows whose dogs straddle the split).
+split_unit: channel
+# Fraction of split units (channels, videos, components or dogs) held out per split.
+test_fraction: 0.25
+n_splits: 10
+ridge_alpha: 1.0
+# "linear": plain ridge (default). "interaction": ridge with all pairwise products, which can detect
+# modalities that act only together but overfit badly on the pilot data (a few thousand windows).
+model: linear
+# Sender nulls: draws per null kind ("shuffle" within video, "time_shift" within pair),
+# and the minimum time offset for time-shifted sender features.
+null_draws: 20
+null_min_shift_s: 5.0
+# scripts/run_lag_and_events.py: delays between the sender's past window and the receiver's
+# target window, and the sender move-onset definition (speeds in body sizes/s).
+lags_s: [0.0, 0.5, 1.0, 2.0, 3.0]
+events:
+  still_speed: 0.3
+  moving_speed: 1.0
+  still_s: 0.5
+  burst_s: 0.3
+  refractory_s: 2.0
+  control_gap_s: 3.0
+# scripts/run_communication_events.py: sender events (klp.data.events.DEFAULT_KINDS) and the
+# receiver's response compared with matched control moments of the same video.
+communication_events:
+  before_s: 0.5
+  after_s: 0.3
+  refractory_s: 2.0
+  # Pair filter for event analysis; looser than min_run_s / max_pair_distance above, since events are rare.
+  min_run_s: null
+  max_pair_distance: 5.0
+  control_gap_s: 3.0
+  # Drop events where the receiver had the same kind of event this shortly before (shared cause).
+  simultaneous_s: 0.8
+  n_controls: 5
+  n_placebo: 2000
+  response_lags_s: [0.0, 1.0, 2.0]
